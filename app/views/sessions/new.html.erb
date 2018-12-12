@@ -1,0 +1,18 @@
+<% provide(:title, 'Login') %>
+<h1>Login</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= flash[:danger] %>
+    <%= form_for(:session, url: login_path) do |f| %>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.submit "Login", class: "btn btn-primary" %>
+    <% end %>
+
+    <p>New user? Signup <%= link_to 'here', signup_path %></p>
+  </div>
+</div>
