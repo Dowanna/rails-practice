@@ -6,14 +6,6 @@ class UserTest < ActiveSupport::TestCase
                       password: 'foobar', password_confirmation: 'foobar')
   end
 
-  def assert_not_message(user)
-    "#{user.inspect} should not be valid"
-  end
-
-  def assert_message(user)
-    "#{user.inspect} should be valid"
-  end
-
   test "should be valid" do
     assert @user.valid?
   end
@@ -74,5 +66,19 @@ class UserTest < ActiveSupport::TestCase
   test "should not allow password length under 8" do
     @user.password = @user.password_confirmation = 'a'
     assert_not @user.valid?, assert_not_message(@user)
+  end
+
+  test "should not cause error when password_digest is nil" do
+    assert_not @user.authenticated?('')
+  end
+
+  private 
+
+  def assert_not_message(user)
+    "#{user.inspect} should not be valid"
+  end
+
+  def assert_message(user)
+    "#{user.inspect} should be valid"
   end
 end
