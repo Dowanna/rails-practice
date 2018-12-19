@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    #debugger
   end
 
   def create
@@ -7,7 +8,7 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:session][:password])
       log_in @user
       params[:session][:remember_me] ? remember(@user) : forget(@user)
-      redirect_to @user
+      redirect_back_or @user
     else
       flash.now[:danger] = 'Invalid login data'
       render 'new'

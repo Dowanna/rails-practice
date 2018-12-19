@@ -20,8 +20,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
         assert_select e, "li", 3
       end
     end
-    # フォームの向き先がデフォルトルートのuserではなくsignupに向いていること
-    assert_select 'form[action=?]', '/signup'
+    assert_select 'form[action=?]', '/users'
   end
 
   test "should add user" do
