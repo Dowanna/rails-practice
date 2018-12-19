@@ -5,6 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
     @other_user = users(:shunya)
+    @unactivated_user = users(:lana)
   end
 
   test "should get new" do
@@ -52,7 +53,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should display all users upon index" do
     login_as @user
     get users_path
-    assert_select 'ul.users li', count: User.all.count
+    assert_select 'ul.users li', count: [User.where(activated: true).paginate(page: 1).count, 30].min
+  end
+
+  test "should redirect to root if user is not activated" do
+    login_as @user
+    get user_path(@unactivated_user)
+    assert_redirected_to root_path
   end
 
   test "should not be able to update admin flag" do

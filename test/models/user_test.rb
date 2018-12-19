@@ -69,7 +69,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "should not cause error when password_digest is nil" do
-    assert_not @user.authenticated?('')
+    assert_not @user.authenticated?(:password, '')
   end
 
   private 
