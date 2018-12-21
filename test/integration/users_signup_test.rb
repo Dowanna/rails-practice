@@ -5,7 +5,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     ActionMailer::Base.deliveries.clear
   end
 
-  test "reject invalid signupt" do
+  test "reject invalid signup" do
     get signup_path
     assert_no_difference "User.count" do
       post signup_path, params: {
