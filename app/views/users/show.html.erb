@@ -13,4 +13,12 @@
     <%= Time.now %>
   </section>
 </aside>
+<div class="col-md-8">
+  <% if @microposts.any? %>
+    <h3>Microposts (<%= @user.microposts.count %>)</h3>
+    <ol>
+      <%= render @microposts %>
+    </ol>
+    <%= will_paginate @microposts %>
+  <% end %>
 </div>

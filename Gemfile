@@ -21,6 +21,12 @@ gem 'uglifier', '>= 1.3.0'
 # to create many test users
 gem 'faker', '1.7.3'
 
+gem 'rubocop', '~> 0.39.0'
+
+# to upload images
+gem 'carrierwave',             '1.2.2'
+gem 'mini_magick',             '4.7.0'
+
 # for pagination
 gem 'will_paginate',           '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'

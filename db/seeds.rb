@@ -39,3 +39,10 @@ User.create(
     activated_at: Time.zone.now
   )
 end
+
+User.order(:created_at).take(6).each do |u|
+  50.times do
+    content = Faker::Lorem.sentence(5)
+    u.microposts.create!(content: content)
+  end
+end

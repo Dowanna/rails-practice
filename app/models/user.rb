@@ -1,13 +1,14 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy
   attr_accessor :reset_token, :remember_token, :activation_token
   before_create :create_activation_digest
   before_save :downcase_email
   VALID_EMAIL_FORMAT = /\A[\w+\-.]+@([\w+\-]+\.)*[a-z]+\z/i
-  validates :name, presence: true, length: {maximum:50}
-  validates :email, presence: true, length: {maximum:50},
-              format: { with: VALID_EMAIL_FORMAT },
-              uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: {minimum:6}, allow_nil: true
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :email, presence: true, length: { maximum: 50 },
+                    format: { with: VALID_EMAIL_FORMAT },
+                    uniqueness: { case_sensitive: false }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   has_secure_password
 
   def remember
@@ -38,13 +39,17 @@ class User < ApplicationRecord
   end
 
   def save_reset_digest
-    self.reset_token = User.new_token #mailerの中から参照する
+    self.reset_token = User.new_token # mailerの中から参照する
     update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
+
+  def feed
+    Micropost.where('user_id=?', id)
+    end
 
   class << self
     # 渡された文字列をハッシュ化する
