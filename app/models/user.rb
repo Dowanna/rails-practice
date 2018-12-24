@@ -49,7 +49,7 @@ class User < ApplicationRecord
 
   def feed
     Micropost.where('user_id=?', id)
-    end
+  end 
 
   class << self
     # 渡された文字列をハッシュ化する
