@@ -21,7 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 # to create many test users
 gem 'faker', '1.7.3'
 
-gem 'rubocop', '~> 0.39.0'
+gem "rubocop", ">= 0.49.0"
 
 # to upload images
 gem 'carrierwave',             '1.2.2'
