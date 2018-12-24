@@ -31,3 +31,7 @@
 /config/master.key
 
 spring/*.pid
+
+# Ignore pictures uploaded in dev environment
+public/uploads/*
+app/assets

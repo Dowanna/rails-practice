@@ -72,4 +72,21 @@ class MicropostsTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "should show image after posting" do
+    login_as(@user)
+    get root_path
+    assert_select 'input[type=file]', 1 
+    picture = fixture_file_upload('test/fixtures/files/rails.png')
+    assert_difference 'Micropost.count', 1 do
+      post microposts_path, params: {
+        micropost: {
+          content: 'valid',
+          picture: picture
+        }
+      }
+    end
+    follow_redirect!
+    assert_template 'static_pages/home'
+    assert_select 'span.picture>img', 1
+  end
 end
