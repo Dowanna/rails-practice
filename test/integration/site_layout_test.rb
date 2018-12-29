@@ -22,6 +22,9 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", user_path(current_user)
     assert_select "a[href=?]", edit_user_path(current_user)
     assert_select "a", text: 'Settings'
+
+    # should show stats
+    assert_select "div.stats"
   end
 
   test "layout contact" do
