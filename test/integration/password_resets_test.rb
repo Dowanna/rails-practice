@@ -16,7 +16,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
         email: ''
       }
     }
-    assert_not_equal flash[:danger], 'User email not found!' #わざとfailする
+    assert_equal flash[:danger], 'User email not found!'
     assert_redirected_to new_password_reset_path
 
     #正しいアドレスを入力
