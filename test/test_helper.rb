@@ -14,10 +14,6 @@ class ActiveSupport::TestCase
   def is_logged_in?
     !session[:user_id].nil?
   end
-
-  def login_as(user_id)
-    session[:user_id] = user_id
-  end
 end
 
 class ActionDispatch::IntegrationTest

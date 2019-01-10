@@ -1,5 +1,15 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
+  has_many :active_relationships,
+    class_name: 'Relationship',
+    foreign_key: 'follower_id',
+    dependent: :destroy
+  has_many :passive_relationships,
+    class_name: 'Relationship',
+    foreign_key: 'followed_id',
+    dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships
   attr_accessor :reset_token, :remember_token, :activation_token
   before_create :create_activation_digest
   before_save :downcase_email
@@ -50,6 +60,18 @@ class User < ApplicationRecord
   def feed
     Micropost.where('user_id=?', id)
   end 
+
+  def follow(other_user)
+    following << other_user
+  end
+
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def following?(user)
+    following.include?(user)
+  end
 
   class << self
     # 渡された文字列をハッシュ化する

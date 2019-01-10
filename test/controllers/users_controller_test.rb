@@ -24,7 +24,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # should not be redirected upon next login
     log_out
     login_as @user
-    assert_redirected_to @user
+    assert_redirected_to root_path
   end
 
   test "should redirect update when logged out" do
@@ -99,5 +99,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       delete user_path @user
     end
     assert_redirected_to users_path
+  end
+
+  test "should redirect following list when not logged in" do
+    get following_user_path(@other_user)
+    assert_redirected_to login_path
+  end
+
+  test "should redirect follower list when not logged in" do
+    get followers_user_path(@other_user)
+    assert_redirected_to login_path
   end
 end

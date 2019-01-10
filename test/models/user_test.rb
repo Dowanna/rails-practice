@@ -71,6 +71,17 @@ class UserTest < ActiveSupport::TestCase
   test "should not cause error when password_digest is nil" do
     assert_not @user.authenticated?(:password, '')
   end
+ 
+  test "should follow and unfollow a user" do
+    michael = users(:michael)
+    shunya  = users(:shunya)
+    assert_not michael.following?(shunya)
+    michael.follow(shunya)
+    assert michael.following?(shunya)
+    assert shunya.followers.include?(michael)
+    michael.unfollow(shunya)
+    assert_not michael.following?(shunya)
+  end
 
   private 
 
