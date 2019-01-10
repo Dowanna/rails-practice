@@ -17,6 +17,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     # if login successful, header should change
     login_as @user
     assert is_logged_in?
+    assert_redirected_to root_path
     follow_redirect!
     assert_select "a[href=?]", users_path
     assert_select "a[href=?]", user_path(current_user)
@@ -24,7 +25,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a", text: 'Settings'
 
     # should show stats
-    assert_select "div.stats"
+    assert_select "section.stats"
   end
 
   test "layout contact" do

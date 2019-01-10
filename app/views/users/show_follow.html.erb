@@ -1,0 +1,10 @@
+<% provide(:title, @title) %>
+<ul class="follow">
+  <% @users.each do |u| %>
+    <li>
+      <%= link_to gravatar_for(@user) %>
+      <%= u.name %>
+    </li>
+  <% end %>
+  <%= will_paginate %>
+</ul>
